@@ -8,12 +8,12 @@
               <a href="/articles" class="{{ request()->is('articles') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                 <span>Articles</span>
               </a>
-              @auth
+              {{-- @auth
               <a href="{{ route('user.articles', ['user' => auth()->user()->id]) }}" 
                 class="{{ request()->is('user/' . $user->id . '/articles') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium">
                   <span>My articles</span>
               </a>
-              @endauth
+              @endauth --}}
             </div>
           </div>
         </div>
@@ -23,15 +23,15 @@
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 @guest
-                  <a href="/login" class="{{ request()->is('login') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                  <a href="login" class="{{ request()->is('login') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                     <span>Log in</span>
                   </a>
-                  <a href="/register" class="{{ request()->is('register') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                  <a href="register" class="{{ request()->is('register') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                     <span>Register</span>
                   </a>
                 @endguest
   
-                @auth
+                {{-- @auth
                   <div class="flex space-x-4">
                     @if (!request()->is('premium/index'))
                       <a href="{{ route('premium.index') }}" 
@@ -53,7 +53,7 @@
   
                     @if(isset($showCategory) && $showCategory)
                       @include('partials.category')
-                    @endif
+                    @endif --}}
                   
                   @auth
                     <div class="flex space-x-4">
