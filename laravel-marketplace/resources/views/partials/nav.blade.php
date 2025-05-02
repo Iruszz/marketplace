@@ -5,8 +5,8 @@
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="/articles" class="{{ request()->is('articles') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
-                <span>Articles</span>
+              <a href="{{ route('marketplace.index') }}" class="{{ request()->is('articles') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                <span>Marketplace</span>
               </a>
               {{-- @auth
               <a href="{{ route('user.articles', ['user' => auth()->user()->id]) }}" 
@@ -23,10 +23,10 @@
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 @guest
-                  <a href="login" class="{{ request()->is('login') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                  <a href="{{ route('login.index') }}" class="{{ request()->is('login') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                     <span>Log in</span>
                   </a>
-                  <a href="register" class="{{ request()->is('register') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                  <a href="{{ route('register.create') }}" class="{{ request()->is('register') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                     <span>Register</span>
                   </a>
                 @endguest

@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -19,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        return view('auth.register');
     }
 
     /**
@@ -27,7 +30,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $attributes = request()->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
 
+        $user = User::create($attributes);
+
+        Auth::login($user);
+
+        return redirect()->route('marketplace.index');
+        // return redirect()->route('user.articles', ['user' => $user->id]);
     }
 
     /**
