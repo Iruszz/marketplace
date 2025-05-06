@@ -47,10 +47,9 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        // $user = Auth::user();
+        $user = Auth::user();
         
         return redirect()->route('marketplace.index');
-        // return redirect()->route('user.articles', ['user' => $user]);
     }
 
     /**

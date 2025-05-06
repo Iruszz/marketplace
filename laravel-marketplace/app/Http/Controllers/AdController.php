@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Ad;
 
-class RegisterController extends Controller
+class AdController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        return view('marketplace.index', compact('user'));
     }
 
     /**
@@ -22,25 +23,25 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $user = Auth::user();
+        return view('marketplace.create', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $attributes = request()->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+    public function store(Request $request): RedirectResponse
+    {  
+        $ad = Ad::create([
+        'title' => $request->title,
+        'body' => $request->description,
+        'price' => $request->price,
+        'category_id' => $request->category_id,
         ]);
 
-        $user = User::create($attributes);
+        $ad->save();
 
-        Auth::login($user);
-
-        return redirect()->route('marketplace.index');
+        return redirect('marketplace.index');
     }
 
     /**
@@ -73,5 +74,11 @@ class RegisterController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        $user = Auth::user();
+        return view('marketplace.dashboard', compact('user'));
     }
 }

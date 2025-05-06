@@ -9,6 +9,11 @@
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    @if (session('status'))
+      <div class="mb-4 text-sm text-green-600 font-medium">
+          {{ session('status') }}
+      </div>
+    @endif
     <form class="space-y-6" action="{{ route('login.store') }}" method="POST">
         @csrf
         
