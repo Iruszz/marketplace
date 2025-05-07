@@ -15,6 +15,7 @@ class LoginController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         return view('auth.login');
     }
 
@@ -29,7 +30,7 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $attributes = $request->validate([
             'email' => ['required', 'email'],
@@ -49,7 +50,7 @@ class LoginController extends Controller
 
         $user = Auth::user();
         
-        return redirect()->route('marketplace.index');
+        return redirect()->route('marketplace.dashboard', compact('user'));
     }
 
     /**

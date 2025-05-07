@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -19,7 +20,7 @@ class AdFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'category_id' => User::inRandomOrder()->first()->id,
+            'category_id' => Category::inRandomOrder()->first()->id,
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 1, 1000),

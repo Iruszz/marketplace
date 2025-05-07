@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Listeners\SendWelcomeEmail;
+use App\Mail\UserRegistered;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class RegisterController extends Controller
 {
@@ -22,7 +27,8 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $user = Auth::user();
+        return view('auth.register', compact('user'));
     }
 
     /**
@@ -37,8 +43,15 @@ class RegisterController extends Controller
         ]);
 
         $user = User::create($attributes);
-
         Auth::login($user);
+
+        $mail = new UserRegistered($user);
+
+        Log::info('Sending email to: ' . $request->user()->email);
+        Log::info('Subject: ' . $mail->subject);
+        Log::info('Mail content: ' . print_r($mail->render(), true));
+
+        Mail::to($request->user())->send(new UserRegistered($user));
 
         return redirect()->route('marketplace.index');
     }

@@ -4,17 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Category;
-use App\Models\Ad;
 use App\Models\User;
 
-class AdSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Ad::factory()->count(20)->create();
+        User::factory()->count(6)->create();
     }
 }
