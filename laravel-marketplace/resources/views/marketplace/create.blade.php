@@ -8,7 +8,7 @@
 @section('content')
 
 <div class="min-h-full bg-white">
-    <div class="mx-auto max-w-7xl lg:px-8">
+    <div class="mx-auto mb-10 max-w-7xl lg:px-8">
         <form action="{{ route('marketplace.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="space-y-12">
@@ -34,7 +34,8 @@
                                 <div class="col-span-4">
                                     <label for="body" class="block text-sm/6 font-medium text-gray-900">Ad</label>
                                     <textarea name="body" id="body" rows="8" 
-                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm @error('body') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">{{ old('body') }}</textarea>
+                                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm
+                                        @error('body') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">{{ old('body') }}</textarea>
                                 </div>
                             </div>
 
@@ -45,7 +46,23 @@
                             <p class="mt-3 text-sm/6 text-gray-600">Write your ad here</p>
                         </div>
 
-                        <div class="col-span-full">
+                        <div class="sm:col-span-3">
+                            <label for="title" class="block text-sm/6 font-medium text-gray-900">Price</label>
+                            <div class="mt-2">
+                                <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
+                                    <span class="px-3 text-gray-500">€</span>
+                                    <input type="text" name="price" id="price" 
+                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
+                                        placeholder:text-gray-400 focus:outline-none sm:text-sm @error('price') text-red-500 @enderror" 
+                                        value="{{ old('price') }}" placeholder="Enter the price">
+                                </div>                                
+                            @error('price')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                            </div>
+                        </div>
+
+                        {{-- <div class="col-span-full">
                             <div class="grid grid-cols-1 sm:grid-cols-6">
                                 <div class="sm:col-span-1">
                                     <label for="categoryId" class="block text-sm/6 font-medium text-gray-900">Category</label>
@@ -61,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="col-span-full">
                             <div class="grid grid-cols-1 sm:grid-cols-6">
@@ -71,6 +88,7 @@
                                 </div>
                             </div>
                         </div> --}}
+                    </div>
                 </div>
             </div>
 

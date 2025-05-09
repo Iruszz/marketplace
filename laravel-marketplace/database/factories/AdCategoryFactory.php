@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
+use App\Models\Ad;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class AdFactory extends Factory
+class AdCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +19,8 @@ class AdFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
-            'title' => $this->faker->sentence(),
-            'body' => $this->faker->paragraph(),
-            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'ad_id' => Ad::factory(), // Generate a random ad
+            'category_id' => Category::factory(), // Generate a random category
         ];
     }
 }

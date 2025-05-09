@@ -13,7 +13,8 @@ class Ad extends Model
         'user_id',
         'title', 
         'body',
-        'category_id',
+        'price',
+        // 'category_id',
     ];
 
     public function user()
@@ -26,8 +27,8 @@ class Ad extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 }

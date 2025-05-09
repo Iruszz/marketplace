@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAdRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
+use Illuminate\Support\Facades\DB;
 
 class AdController extends Controller
 {
@@ -14,8 +16,9 @@ class AdController extends Controller
      */
     public function index()
     {
+        $ads = DB::table('ads')->get();
         $user = Auth::user();
-        return view('marketplace.index', compact('user'));
+        return view('marketplace.index', compact('ads', 'user'));
     }
 
     /**
@@ -30,18 +33,15 @@ class AdController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreAdRequest $request): RedirectResponse
     {  
-        $ad = Ad::create([
-        'title' => $request->title,
-        'body' => $request->description,
-        'price' => $request->price,
-        'category_id' => $request->category_id,
-        ]);
+        $validated = $request->validated();
 
-        $ad->save();
+        $validated['user_id'] = Auth::id();
 
-        return redirect('marketplace.index');
+        Ad::create($validated);
+
+        return redirect()->route('marketplace.index', ['user' => Auth::id()]);
     }
 
     /**
@@ -78,7 +78,8 @@ class AdController extends Controller
 
     public function dashboard()
     {
+        $ads = Auth::user()->ads;
         $user = Auth::user();
-        return view('marketplace.dashboard', compact('user'));
+        return view('marketplace.dashboard', compact('ads', 'user'));
     }
 }

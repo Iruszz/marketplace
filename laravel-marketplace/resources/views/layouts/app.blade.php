@@ -22,7 +22,7 @@
 
         @yield('content')
     </div>
-
+    
     @if (!isset($hideFooter) || !$hideFooter)
         @include('partials.footer')
     @endif

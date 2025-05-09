@@ -8,7 +8,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AdController;
 
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
-Route::get('create', [AdController::class, 'create'])->name('marketplace.create');
+Route::get('ads/create', [AdController::class, 'create'])->name('marketplace.create');
+Route::post('ads/store', [AdController::class, 'store'])->name('marketplace.store');
 Route::get('user/{user}/dashboard', [AdController::class, 'dashboard'])
     ->name('marketplace.dashboard')
     ->middleware('auth');
