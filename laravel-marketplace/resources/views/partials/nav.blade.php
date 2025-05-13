@@ -31,7 +31,7 @@
   
                 @auth
                   <a href="{{ route('marketplace.dashboard', ['user' => auth()->user()->id]) }}"
-                  class="{{ request()->is('user/' . $user->id . '/dashboard') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} flex rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
+                  class="{{ request()->is('user/' . auth()->user()->id . '/dashboard') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} flex rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
                     <svg class="w-5 h-5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                     </svg>              
@@ -52,7 +52,7 @@
                     <div class="flex space-x-4">
                       @if (!request()->is('create'))
                         <a href="{{ route('marketplace.create') }}" 
-                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center space-x-4 rounded-md px-3 py-1 text-sm font-medium">
+                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800 flex items-center space-x-4 rounded-md px-3 py-1 text-sm font-medium">
                             <span>New ad</span>
                         </a>
                       @endif

@@ -14,9 +14,16 @@ class AdController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function dashboard()
+    {
+        $ads = Auth::user()->ads;
+        $user = Auth::user();
+        return view('marketplace.dashboard', compact('ads', 'user'));
+    }
+
     public function index()
     {
-        $ads = DB::table('ads')->get();
+        $ads = Ad::all();
         $user = Auth::user();
         return view('marketplace.index', compact('ads', 'user'));
     }
@@ -47,17 +54,21 @@ class AdController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Ad $ad)
     {
-        //
+        $user = Auth::user();
+
+        return view('marketplace.show', compact('ad', 'user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ad $ad)
     {
-        //
+        $user = Auth::user();
+
+        return view('marketplace.edit', compact('ad', 'user'));
     }
 
     /**
@@ -74,12 +85,5 @@ class AdController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function dashboard()
-    {
-        $ads = Auth::user()->ads;
-        $user = Auth::user();
-        return view('marketplace.dashboard', compact('ads', 'user'));
     }
 }

@@ -10,6 +10,8 @@ use App\Http\Controllers\AdController;
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
 Route::get('ads/create', [AdController::class, 'create'])->name('marketplace.create');
 Route::post('ads/store', [AdController::class, 'store'])->name('marketplace.store');
+Route::get('ads/{ad}', [AdController::class, 'show'])->name('ad.show');
+Route::get('ads/{ad}/edit', [AdController::class, 'edit'])->name('ad.edit');
 Route::get('user/{user}/dashboard', [AdController::class, 'dashboard'])
     ->name('marketplace.dashboard')
     ->middleware('auth');

@@ -84,7 +84,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-6">
                                 <div class="sm:col-span-1">
                                     <input id="is_premium" type="checkbox" name="is_premium" value="1" class="w-4 h-4 text-purple-600 bg-gray-100 border border-gray-300 rounded-sm">
-                                    <label for="is_premium" class="ms-2 text-sm font-medium text-gray-900">Premium article</label>
+                                    <label for="is_premium" class="ms-2 text-sm font-medium text-gray-900">Premium ad</label>
                                 </div>
                             </div>
                         </div> --}}
