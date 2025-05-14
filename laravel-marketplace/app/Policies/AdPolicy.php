@@ -15,7 +15,17 @@ class AdPolicy
         //
     }
 
-    public function edit(User $user, Ad $ad)
+    public function edit(User $user, Ad $ad): bool
+    {
+        return $user->id === $ad->user_id;
+    }
+
+    public function update(User $user, Ad $ad): bool
+    {
+        return $user->id === $ad->user_id;
+    }
+
+    public function delete(User $user, Ad $ad): bool
     {
         return $user->id === $ad->user_id;
     }

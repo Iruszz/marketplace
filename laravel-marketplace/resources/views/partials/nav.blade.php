@@ -51,7 +51,7 @@
   
                     <div class="flex space-x-4">
                       @if (!request()->is('create'))
-                        <a href="{{ route('marketplace.create') }}" 
+                        <a href="{{ route('ads.create') }}" 
                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800 flex items-center space-x-4 rounded-md px-3 py-1 text-sm font-medium">
                             <span>New ad</span>
                         </a>

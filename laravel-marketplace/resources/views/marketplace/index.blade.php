@@ -65,7 +65,7 @@
           >
             <div class="flex flex-col h-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
               <div class="h-56 w-full">
-                  <a href="{{ route('ad.show', $ad->id) }}">
+                  <a href="{{ route('ads.show', $ad->id) }}">
                       <img class="mx-auto h-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
                   </a>
               </div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
   
-                <a href="{{ route('ad.show', $ad->id) }}"
+                <a href="{{ route('ads.show', $ad->id) }}"
                   class="text-lg font-semibold leading-tight text-gray-900 hover:underline">
                   {{ $ad->limited_title }}
                </a>               

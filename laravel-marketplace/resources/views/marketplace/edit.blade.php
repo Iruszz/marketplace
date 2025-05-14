@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('header1')
-    @section('title', 'Edit acticle')
-    @section('heading', 'Edit your ad')
+    @section('title', 'Edit advertisement')
+    @section('heading', 'Edit and save to make changes')
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
 <div class="min-h-full bg-white">
     <div class="mx-auto max-w-7xl lg:px-8">
         <form 
-        {{-- action="{{ route('ads.update', $ad->id) }}" method="POST" enctype="multipart/form-data" --}}
+        action="{{ route('ads.update', $ad->id) }}" method="POST" enctype="multipart/form-data"
             >
             @csrf
             @method('PATCH')
@@ -47,6 +47,22 @@
                                     @enderror
                                     <p class="mt-3 text-sm/6 text-gray-600">Write your ad here</p>
 
+                        </div>
+
+                                                <div class="sm:col-span-3">
+                            <label for="title" class="block text-sm/6 font-medium text-gray-900">Price</label>
+                            <div class="mt-2">
+                                <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
+                                    <span class="px-3 text-gray-500">€</span>
+                                    <input type="text" name="price" id="price" 
+                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
+                                        placeholder:text-gray-400 focus:outline-none sm:text-sm @error('price') text-red-500 @enderror" 
+                                        value="{{ old('price', $ad->price)}}">
+                                </div>                                
+                            @error('price')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                            </div>
                         </div>
                         
                         {{-- <div class="col-span-full">

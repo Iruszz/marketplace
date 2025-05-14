@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdRequest;
+use App\Http\Requests\UpdateAdRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class AdController extends Controller
 {
@@ -42,13 +43,15 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request): RedirectResponse
     {  
+        $user = Auth::user();
+        
         $validated = $request->validated();
 
         $validated['user_id'] = Auth::id();
-
+        
         Ad::create($validated);
 
-        return redirect()->route('marketplace.index', ['user' => Auth::id()]);
+        return redirect()->route('marketplace.dashboard', compact('user'));
     }
 
     /**
@@ -74,16 +77,29 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateAdRequest $request, Ad $ad): RedirectResponse
+    { 
+        Gate::authorize('update', $ad);
+        
+        $validated = $request->validated();
+
+        $ad->update($validated);
+
+        $user = Auth::user();
+
+        return redirect()->route('marketplace.dashboard', compact('ad', 'user'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Ad $ad)
     {
-        //
+        $user = Auth::user();
+        
+        $ad->delete();
+        
+        return redirect()->route('marketplace.dashboard', compact('ad', 'user'))
+        ->with('Article deleted');
     }
 }
