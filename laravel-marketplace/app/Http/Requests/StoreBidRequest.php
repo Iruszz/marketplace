@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAdRequest extends FormRequest
+class StoreBidRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,9 +14,7 @@ class StoreAdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'body' => 'required|string',
-            // 'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
         ];
     }
 }

@@ -17,7 +17,6 @@ class UpdateAdRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'price' => 'required|numeric|min:0',
             // 'category_id' => 'required|exists:categories,id',
         ];
     }

@@ -40,4 +40,9 @@ class Ad extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function bid()
+    {
+        return $this->hasMany(Bid::class);
+    }
 }

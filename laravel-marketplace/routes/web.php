@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\BidController;
 
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
 Route::get('ads/create', [AdController::class, 'create'])->name('ads.create');
@@ -17,6 +18,10 @@ Route::get('user/{user}/dashboard', [AdController::class, 'dashboard'])
     ->name('marketplace.dashboard')
     ->middleware('auth');
 Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
+
+Route::get('bid/index', [BidController::class, 'index'])->name('bid.index');
+Route::get('bid/create', [BidController::class, 'create'])->name('bid.create');
+Route::post('bid/store', [BidController::class, 'store'])->name('bid.store');
 
 Route::get('register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
