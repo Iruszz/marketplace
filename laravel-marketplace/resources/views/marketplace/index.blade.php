@@ -148,7 +148,7 @@
                 <div class="mt-auto flex items-center justify-between gap-4">
                     <p class="text-2xl font-extrabold leading-tight text-gray-900">{{'€' . $ad->price}}</p>
         
-                    <a href="{{ route('bid.index') }}"
+                    <a href="{{ route('bid.index', ['ad_id' => $ad->id]) }}"
                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBidRequest;
+use App\Models\Ad;
 use App\Models\Bid;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,9 +14,11 @@ class BidController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Ad $ad)
     {
-        return view('bid.index');
+        $bids = Bid::where('ad_id', $ad->id)->with('user')->get();
+        $user = Auth::user();
+        return view('bid.index', compact('ad', 'bids', 'user'));
     }
 
     /**
