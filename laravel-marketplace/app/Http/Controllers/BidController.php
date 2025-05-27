@@ -16,9 +16,7 @@ class BidController extends Controller
      */
     public function index(Ad $ad)
     {
-        $bids = Bid::where('ad_id', $ad->id)->with('user')->get();
-        $user = Auth::user();
-        return view('bid.index', compact('ad', 'bids', 'user'));
+        //
     }
 
     /**

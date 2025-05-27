@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
+use App\Models\Bid;
 use Illuminate\Support\Facades\Gate;
 
 class AdController extends Controller
@@ -22,7 +23,7 @@ class AdController extends Controller
         return view('marketplace.dashboard', compact('ads', 'user'));
     }
 
-    public function index()
+    public function index(Ad $ad)
     {
         $ads = Ad::all();
         $user = Auth::user();
@@ -60,8 +61,9 @@ class AdController extends Controller
     public function show(Ad $ad)
     {
         $user = Auth::user();
+        $bids = Bid::where('ad_id', $ad->id)->with('user')->get();
 
-        return view('marketplace.show', compact('ad', 'user'));
+        return view('marketplace.show', compact('ad', 'bids', 'user'));
     }
 
     /**

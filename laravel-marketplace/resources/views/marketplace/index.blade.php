@@ -61,7 +61,6 @@
           @foreach ($ads as $ad)
           <article class="ad-card flex flex-col max-w-xl h-140 items-start justify-between"
           style="background-image: "
-          {{-- data-category-id="{{ $ad->category_id }}" --}}
           >
             <div class="flex flex-col h-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
               <div class="h-56 w-full">
@@ -148,7 +147,7 @@
                 <div class="mt-auto flex items-center justify-between gap-4">
                     <p class="text-2xl font-extrabold leading-tight text-gray-900">{{'€' . $ad->price}}</p>
         
-                    <a href="{{ route('bid.index', ['ad_id' => $ad->id]) }}"
+                    <a href="{{ route('ads.show', ['ad' => $ad->id]) }}"
                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
