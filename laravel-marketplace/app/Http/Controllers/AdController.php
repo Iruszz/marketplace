@@ -61,7 +61,10 @@ class AdController extends Controller
     public function show(Ad $ad)
     {
         $user = Auth::user();
-        $bids = Bid::where('ad_id', $ad->id)->with('user')->get();
+        $bids = Bid::where('ad_id', $ad->id)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('marketplace.show', compact('ad', 'bids', 'user'));
     }

@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ad_category', function (Blueprint $table) {
-            $table->foreignId('ad_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->id();
+            $table->foreignId('ad_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+            
+            $table->unique(['ad_id', 'category_id']);
         });
     }
 

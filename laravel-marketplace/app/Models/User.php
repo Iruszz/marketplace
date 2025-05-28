@@ -48,6 +48,6 @@ class User extends Authenticatable implements CanResetPassword
 
     public function ads()
     {
-        return $this->hasMany(Bid::class);
+        return $this->hasMany(Ad::class);
     }
 }

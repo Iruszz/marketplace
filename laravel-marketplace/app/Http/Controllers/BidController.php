@@ -37,10 +37,11 @@ class BidController extends Controller
         $validated = $request->validated();
 
         $validated['user_id'] = Auth::id();
+        $validated['ad_id'] = $request->input('ad_id');
         
         Bid::create($validated);
 
-        return redirect()->route('marketplace.dashboard', compact('user'));
+        return redirect()->route('ads.show', ['ad' => $validated['ad_id']]);
     }
 
     /**
