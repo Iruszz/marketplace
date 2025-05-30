@@ -9,28 +9,20 @@
 
 <div class="min-h-full bg-white">
     <div class="mx-auto max-w-7xl lg:px-8">
-        <form 
-        action="{{ route('ads.update', $ad->id) }}" method="POST" enctype="multipart/form-data"
-            >
+
+        <form action="{{ route('ads.update', $ad->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-            <div class="space-y-12">
-                <div class="border-b border-gray-900/10 pb-12">
-                    <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-3">
+            
+                    <div class="flex flex-col gap-8">
+                        <div>
                             <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
-                            <div class="mt-2">
-                                <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600
-                                    @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
-                                    <input type="text" name="title" id="title" 
-                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
-                                        placeholder:text-gray-400 focus:outline-none sm:text-sm @error('title') text-red-500 @enderror" 
-                                        value="{{ old('title', $ad->title)}}">
-                                </div>                                
+                            <input type="text" name="title" id="title" 
+                                class="mt-2 block w-full max-w-md rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm @error('title') text-red-500 border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror" 
+                                value="{{ old('title', $ad->title)}}">                                
                                 @error('title')
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
-                            </div>
                         </div>
 
                         <div class="col-span-full">
@@ -43,13 +35,12 @@
                                 </div>
                             </div>
                                 @error('body')
-                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                    @enderror
-                                    <p class="mt-3 text-sm/6 text-gray-600">Write your ad here</p>
-
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                                <p class="mt-3 text-sm/6 text-gray-600">Write your ad here</p>
                         </div>
 
-                                                <div class="sm:col-span-3">
+                        <div class="sm:col-span-3">
                             <label for="title" class="block text-sm/6 font-medium text-gray-900">Price</label>
                             <div class="mt-2">
                                 <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
@@ -75,7 +66,7 @@
                             </div>
                         </div> --}}
 
-                        {{-- <div class="sm:col-span-2">
+                        <div class="sm:col-span-2">
                             <label for="categoryId" class="block text-sm/6 font-medium text-gray-900">Category</label>
                             <div class="mt-2 grid grid-cols-1">
                                 <select id="categoryId" type="text" name="category_id"
@@ -88,7 +79,7 @@
                                     {{ $ad->category_id }}
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
 
                         {{-- <div class="col-span-full">
                             <div class="grid grid-cols-1 sm:grid-cols-6">
@@ -101,8 +92,6 @@
                             </div>
                         </div> --}}
                     </div>
-                </div>
-            </div>
 
             <div class="flex items-center justify-end gap-x-6 mt-6">
                 <a href="{{ url()->previous() }}" type="button" class="text-sm/6 font-semibold text-gray-900">

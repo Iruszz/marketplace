@@ -17,7 +17,7 @@
                         <div class="sm:col-span-3">
                             <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
                             <div class="mt-2">
-                                <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
+                                <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300">
                                     <input type="text" name="title" id="title" 
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
                                         placeholder:text-gray-400 focus:outline-none sm:text-sm @error('title') text-red-500 @enderror" 
@@ -51,8 +51,8 @@
                             <div class="mt-2">
                                 <div class="flex items-center rounded-md bg-white pl-3 border border-gray-300 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 @error('title') border-red-500 focus-within:border-red-500 focus-within:ring-red-500 @enderror">
                                     <span class="px-3 text-gray-500">€</span>
-                                    <input type="text" name="price" id="price" 
-                                        class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
+                                    <input type="number" name="price" id="price" 
+                                        class="block border-0 min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 
                                         placeholder:text-gray-400 focus:outline-none sm:text-sm @error('price') text-red-500 @enderror" 
                                         value="{{ old('price') }}" placeholder="Enter the price">
                                 </div>                                

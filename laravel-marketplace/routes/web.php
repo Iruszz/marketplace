@@ -19,7 +19,7 @@ Route::get('user/{user}/dashboard', [AdController::class, 'dashboard'])
     ->middleware('auth');
 Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
 
-Route::post('bid/store', [BidController::class, 'store'])->name('bid.store');
+Route::post('/ads/{ad}/bids', [BidController::class, 'store'])->name('bid.store');
 
 Route::get('register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');

@@ -15,6 +15,11 @@ class AdPolicy
         //
     }
 
+    public function bid(User $user, Ad $ad): bool
+    {
+        return $user->id !== $ad->user_id;
+    }
+
     public function edit(User $user, Ad $ad): bool
     {
         return $user->id === $ad->user_id;

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
 use App\Models\Bid;
+use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 
 class AdController extends Controller
@@ -63,7 +64,7 @@ class AdController extends Controller
         $user = Auth::user();
         $bids = Bid::where('ad_id', $ad->id)
             ->with('user')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('price', 'desc')
             ->get();
 
         return view('marketplace.show', compact('ad', 'bids', 'user'));
@@ -76,7 +77,9 @@ class AdController extends Controller
     {
         $user = Auth::user();
 
-        return view('marketplace.edit', compact('ad', 'user'));
+        $categories = Category::all();
+
+        return view('marketplace.edit', compact('ad', 'user', 'categories'));
     }
 
     /**

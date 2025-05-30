@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Bid;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBidRequest extends FormRequest
@@ -13,8 +14,14 @@ class StoreBidRequest extends FormRequest
      */
     public function rules(): array
     {
+        $adId = $this->route('ad');
+
+        $highestBid = Bid::where('ad_id', $adId)->max('price');
+
+        $minPrice = $highestBid ? $highestBid + 0.01 : 0;
+
         return [
-            'price' => 'required|numeric|min:0',
+            'price' => ['required', 'numeric', 'min:' . $minPrice],
         ];
     }
 }
