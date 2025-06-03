@@ -58,10 +58,6 @@
                       @endif
                     </div>
                 @endauth
-  
-                    {{-- @if(isset($showCategory) && $showCategory)
-                      @include('partials.category')
-                    @endif --}}
                   
                 @auth
                   <div class="flex space-x-4">

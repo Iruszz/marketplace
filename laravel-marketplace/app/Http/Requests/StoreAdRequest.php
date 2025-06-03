@@ -18,7 +18,8 @@ class StoreAdRequest extends FormRequest
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'price' => 'required|numeric|min:0',
-            // 'category_id' => 'required|exists:categories,id',
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'exists:categories,id',
         ];
     }
 }

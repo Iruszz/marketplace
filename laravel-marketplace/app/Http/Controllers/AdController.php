@@ -28,16 +28,20 @@ class AdController extends Controller
     {
         $ads = Ad::all();
         $user = Auth::user();
-        return view('marketplace.index', compact('ads', 'user'));
+        $categories = Category::all();
+
+        return view('marketplace.index', compact('ads', 'user', 'categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Ad $ad)
     {
         $user = Auth::user();
-        return view('marketplace.create', compact('user'));
+        $categories = Category::all();
+        
+        return view('marketplace.create', compact('ad', 'user', 'categories'));
     }
 
     /**
@@ -51,7 +55,9 @@ class AdController extends Controller
 
         $validated['user_id'] = Auth::id();
         
-        Ad::create($validated);
+        $ad = Ad::create($validated);
+
+        $ad->categories()->sync($validated['category_ids']);
 
         return redirect()->route('marketplace.dashboard', compact('user'));
     }
@@ -92,6 +98,8 @@ class AdController extends Controller
         $validated = $request->validated();
 
         $ad->update($validated);
+
+        $ad->categories()->sync($validated['category_ids']);
 
         $user = Auth::user();
 

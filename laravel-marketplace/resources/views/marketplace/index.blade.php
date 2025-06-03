@@ -13,15 +13,7 @@
       <!-- Heading & Filters -->
       <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
           <div class="flex items-center space-x-4">
-            <button data-modal-toggle="filterModal" data-modal-target="filterModal" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 sm:w-auto">
-                <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z" />
-                </svg>
-                Filters
-                <svg class="-me-0.5 ms-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
-                </svg>
-            </button>
+            @include('partials.category')
             <button id="sortDropdownButton1" data-dropdown-toggle="dropdownSort1" type="button" class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 sm:w-auto">
                 <svg class="-ms-0.5 me-2 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4 4 7m9-3h6l-6 6h6m-6.5 10 3.5-7 3.5 7M14 18h4" />
@@ -63,13 +55,13 @@
           style="background-image: "
           >
             <div class="flex flex-col h-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-              <div class="h-56 w-full">
+              <div class="flex justify-center items-center h-56 w-full rounded-lg border border-gray-200 shadow-sm overflow-hidden">
                   <a href="{{ route('ads.show', $ad->id) }}">
-                      <img class="mx-auto h-full" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
+                      <img class="mx-auto w-full object-cover " src="{{ asset('storage/ads-images/' . $ad->image) }}" alt="" />
                   </a>
               </div>
-              <div class="flex flex-col flex-grow pt-6">
-                <div class="mb-4 flex items-center justify-between gap-4">  
+              <div class="flex flex-col flex-grow">
+                <div class=" flex items-center justify-between gap-4">  
                     <div class="flex items-center justify-end gap-1">
                         <button type="button" data-tooltip-target="tooltip-quick-look" class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 ">
                         <span class="sr-only"> Quick look </span>
@@ -95,11 +87,17 @@
                         </div>
                     </div>
                 </div>
-  
+
                 <a href="{{ route('ads.show', $ad->id) }}"
-                  class="text-lg font-semibold leading-tight text-gray-900 hover:underline">
+                  class="pt-2 text-lg font-semibold leading-tight text-gray-900 hover:underline">
                   {{ $ad->limited_title }}
-               </a>               
+               </a>
+               
+                <div class="flex flex-row pt-2 pb-2 gap-2 relative items-start grid-rows-3 z-20 w-fit h-fit">
+                  @foreach ($ad->categories as $category)
+                    <span class="relative border rounded-md px-2 py-1 text-xs font-semibold {{ getCategoryClasses($category->color) }}">{{ $category->name }}</span>
+                  @endforeach
+                </div>
     
                 <div class="mt-2 flex items-center gap-2">
                     <div class="flex items-center">
@@ -220,3 +218,24 @@
   </section>
 
 @endsection
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.getElementById('dropdown');
+    
+    dropdown.addEventListener('change', () => {
+      const selected = dropdown.value;
+      console.log("Selected category:", selected);
+      
+      document.querySelectorAll('.ad-card').forEach(article => {
+        const categoryId = article.getAttribute('data-category-id');
+        
+        if (!selected || categoryId === selected) {
+          article.style.display = '';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
