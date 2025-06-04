@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+use Laravel\Scout\Searchable;
 
 class Ad extends Model
 {
     use HasFactory;
+    use Searchable;
+
     protected $fillable = [
         'user_id',
         'title', 

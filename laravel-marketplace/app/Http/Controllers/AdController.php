@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
 use App\Models\Bid;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AdController extends Controller
@@ -24,13 +25,28 @@ class AdController extends Controller
         return view('marketplace.dashboard', compact('ads', 'user'));
     }
 
-    public function index(Ad $ad)
+    public function index()
     {
-        $ads = Ad::all();
+        $keywords = explode(' ', request('q'));
+        
+        $ads = Ad::with('categories')
+            ->when($keywords, function ($query, $keywords) {
+                $query->where(function ($q) use ($keywords) {
+                    foreach ($keywords as $word) {
+                        $q->orWhere('title', 'like', "%{$word}%");
+                    }
+                });
+            })
+            ->paginate(10)
+            ->through(function ($ad) {
+            $ad->category_ids_csv = $ad->categories->pluck('id')->join(',');
+            return $ad;
+        });
+
         $user = Auth::user();
         $categories = Category::all();
 
-        return view('marketplace.index', compact('ads', 'user', 'categories'));
+        return view('marketplace.index', compact('ads', 'user', 'categories'),);
     }
 
     /**
