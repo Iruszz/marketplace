@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-
-@section('header1')
-    @section('title', 'Bid')
-    @section('heading', 'Bid on item')
-@endsection
-
 @section('content')
 <div class="flex h-screen w-full justify-center pt-10 pr-10 pl-10">
   <article class="h-full w-full max-w-8xl grid grid-cols-7 gap-6 mx-30 mt-0 mb-0 items-start">

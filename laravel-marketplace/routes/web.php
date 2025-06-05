@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -16,10 +17,18 @@ Route::post('ads/store', [AdController::class, 'store'])->name('ads.store');
 Route::get('ads/{ad}', [AdController::class, 'show'])->name('ads.show');
 Route::get('ads/{ad}/edit', [AdController::class, 'edit'])->name('ads.edit');
 Route::patch('ads/{ad}', [AdController::class, 'update'])->name('ads.update');
-Route::get('user/{user}/dashboard', [AdController::class, 'dashboard'])
-    ->name('marketplace.dashboard')
-    ->middleware('auth');
 Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
+
+Route::get('user/{user}/index', [AccountController::class, 'index'])
+    ->name('account.index')
+    ->middleware('auth');
+Route::get('user/{user}/inbox', [AccountController::class, 'inbox'])
+    ->name('account.inbox')
+    ->middleware('auth');
+
+// Route::get('user/{user}/index', [AccountController::class, 'index'])
+// ->name('account.index')
+// ->middleware('auth');
 
 Route::post('/ads/{ad}/bids', [BidController::class, 'store'])->name('bid.store');
 

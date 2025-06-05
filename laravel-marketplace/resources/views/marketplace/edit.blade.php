@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
-@section('header1')
-    @section('title', 'Edit advertisement')
-    @section('heading', 'Edit and save to make changes')
-@endsection
-
 @section('content')
 
-<div class="min-h-full bg-white">
+<div class="pt-20 min-h-full bg-white">
     <div class="mx-auto max-w-7xl lg:px-8">
 
         <form action="{{ route('ads.update', $ad->id) }}" method="POST" enctype="multipart/form-data">

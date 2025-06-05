@@ -30,16 +30,6 @@
                 @endguest
   
                 @auth
-                  <a href="{{ route('marketplace.dashboard', ['user' => auth()->user()->id]) }}"
-                  class="{{ request()->is('user/' . auth()->user()->id . '/dashboard') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} flex rounded-md px-3 py-2 text-sm font-medium" aria-current="page">
-                    <svg class="w-5 h-5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                    </svg>              
-                    Account
-                    <svg class="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
-                    </svg> 
-                  </a>
                   {{-- <div class="flex space-x-4">
                     @if (!request()->is('premium/index'))
                       <a href="{{ route('premium.index') }}" 
@@ -57,17 +47,8 @@
                         </a>
                       @endif
                     </div>
-                @endauth
-                  
-                @auth
-                  <div class="flex space-x-4">
-                    <form method="POST" action="/logout">
-                      @csrf
-                      <button class="{{ request()->is('logout') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white'}} rounded-md px-3 py-2 text-sm font-medium">
-                        <span>Log out</span>
-                      </button>
-                    </form>
-                  </div>
+
+                     @include('partials.account')
                 @endauth
               </div>
             </div>

@@ -10,38 +10,29 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
 use App\Models\Bid;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function dashboard()
-    {
-        $ads = Auth::user()->ads;
-        $user = Auth::user();
-        return view('marketplace.dashboard', compact('ads', 'user'));
-    }
-
-    public function index()
+    public function index(Request $request)
     {
         $keywords = explode(' ', request('q'));
         
         $ads = Ad::with('categories')
-            ->when($keywords, function ($query, $keywords) {
+            ->when($request->filled('q'), function ($query) use ($keywords) {
                 $query->where(function ($q) use ($keywords) {
                     foreach ($keywords as $word) {
-                        $q->orWhere('title', 'like', "%{$word}%");
+                        $q->where('title', 'like', "%{$word}%");
                     }
                 });
             })
             ->paginate(10)
             ->through(function ($ad) {
-            $ad->category_ids_csv = $ad->categories->pluck('id')->join(',');
-            return $ad;
-        });
+                $ad->category_ids_csv = $ad->categories->pluck('id')->join(',');
+                return $ad;
+            });
 
         $user = Auth::user();
         $categories = Category::all();
@@ -75,7 +66,15 @@ class AdController extends Controller
 
         $ad->categories()->sync($validated['category_ids']);
 
-        return redirect()->route('marketplace.dashboard', compact('user'));
+        $imageFiles = Storage::disk('public')->files('ads-images');
+        $jpgFiles = array_filter($imageFiles, fn($file) => str_ends_with($file, '.jpg'));
+
+        if (!empty($jpgFiles)) {
+            $ad->image = basename(Arr::random($jpgFiles));
+            $ad->save();
+        }
+
+        return redirect()->route('account.index', compact('user'));
     }
 
     /**
@@ -119,7 +118,7 @@ class AdController extends Controller
 
         $user = Auth::user();
 
-        return redirect()->route('marketplace.dashboard', compact('ad', 'user'));
+        return redirect()->route('account.index', compact('ad', 'user'));
     }
 
     /**
@@ -131,7 +130,7 @@ class AdController extends Controller
         
         $ad->delete();
         
-        return redirect()->route('marketplace.dashboard', compact('ad', 'user'))
+        return redirect()->route('account.index', compact('ad', 'user'))
         ->with('Article deleted');
     }
 }

@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    
-    <section class="bg-gray-50 py-8 antialiased">
+
+@if ($ads->isEmpty())
+<p class="text-center text-gray-500 text-lg mt-10">
+  You have no advertisements yet.
+</p>
+@else
+<section class="flex-grow bg-gray-50 py-8 antialiased">
       <div class="mx-14 max-w-screen-3xl px-4 2xl:px-0">
         <!-- Heading & Filters -->
         <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
@@ -41,7 +46,7 @@
             </div>
 
             {{-- Search bar --}}
-            <form method="GET" action="{{ route('marketplace.index') }}" class="min-w-sm max-w-lg mx-auto">   
+            <form method="GET" action="{{ route('account.index', ['user' => auth()->user()->id]) }}" class="min-w-sm max-w-lg mx-auto">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                 <div class="relative flex items-center">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -153,12 +158,13 @@
                   <div class="mt-auto flex items-center justify-between gap-4">
                       <p class="text-2xl font-extrabold leading-tight text-gray-900">{{'€' . $ad->price}}</p>
           
-                      <a href="{{ route('ads.show', ['ad' => $ad->id]) }}"
+                      <a href="{{ route('ads.edit', ['ad' => $ad->id]) }}"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3.5" stroke="currentColor" class="size-4">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
-                          Bid
+
+                          Edit
                       </a>
                   </div>
                 </div>
@@ -171,6 +177,7 @@
 
     <!-- Pagination -->
     {{ $ads->onEachSide(5)->links('vendor.pagination.tailwind') }}
+@endif
 
 @endsection
 

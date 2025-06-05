@@ -50,7 +50,7 @@ class LoginController extends Controller
 
         $user = Auth::user();
         
-        return redirect()->route('marketplace.dashboard', compact('user'));
+        return redirect()->route('account.index', compact('user'));
     }
 
     /**

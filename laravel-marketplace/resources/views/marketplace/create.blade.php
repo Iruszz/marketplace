@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
-@section('header1')
-    @section('title', 'New ad')
-    @section('heading', 'Create a new Ad')
-@endsection
-
 @section('content')
 
-<div class="min-h-full bg-white">
+<div class="pt-20 min-h-full bg-white">
     <div class="mx-auto max-w-7xl lg:px-8">
 
         <form action="{{ route('ads.store') }}" method="POST" enctype="multipart/form-data">

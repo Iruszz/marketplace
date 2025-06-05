@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body class="min-h-screen flex flex-col">
-    <div class="min-h-screen flex-grow">
+    <div class="min-h-screen flex flex-col">
         @if (!isset($hideNav) || !$hideNav)
             @include('partials.nav')
         @endif
