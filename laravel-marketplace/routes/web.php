@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\InboxController;
 use App\Models\Category;
 
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
@@ -22,8 +23,11 @@ Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy')
 Route::get('user/{user}/index', [AccountController::class, 'index'])
     ->name('account.index')
     ->middleware('auth');
-Route::get('user/{user}/inbox', [AccountController::class, 'inbox'])
+Route::get('user/{user}/inbox', [InboxController::class, 'index'])
     ->name('account.inbox')
+    ->middleware('auth');
+Route::post('inbox/store', [InboxController::class, 'store'])
+    ->name('inbox.store')
     ->middleware('auth');
 
 // Route::get('user/{user}/index', [AccountController::class, 'index'])

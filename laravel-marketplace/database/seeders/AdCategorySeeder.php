@@ -16,7 +16,7 @@ class AdCategorySeeder extends Seeder
     {
         Ad::all()->each(function ($ad) {
             $categories = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
-            $ad->categories()->attach($categories);
+            $ad->categories()->syncWithoutDetaching($categories);
         });
     }
 }

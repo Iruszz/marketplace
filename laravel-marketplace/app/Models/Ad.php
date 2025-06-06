@@ -30,11 +30,6 @@ class Ad extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function categories()
     {
         return $this->belongsToMany(Category::class);
@@ -44,4 +39,10 @@ class Ad extends Model
     {
         return $this->hasMany(Bid::class);
     }
+
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class);
+    }
+
 }

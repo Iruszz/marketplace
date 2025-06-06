@@ -34,9 +34,4 @@ class AccountController extends Controller
         
         return view('account.index', compact('ads', 'user', 'categories'));
     }
-
-    public function inbox() {
-
-        return view('account.inbox');
-    }
 }
