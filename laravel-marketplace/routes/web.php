@@ -23,7 +23,7 @@ Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy')
 Route::get('user/{user}/index', [AccountController::class, 'index'])
     ->name('account.index')
     ->middleware('auth');
-Route::get('user/{user}/inbox', [InboxController::class, 'index'])
+Route::get('inbox/{conversation?}', [InboxController::class, 'index'])
     ->name('account.inbox')
     ->middleware('auth');
 Route::post('inbox/store', [InboxController::class, 'store'])

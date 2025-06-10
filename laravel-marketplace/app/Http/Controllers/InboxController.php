@@ -14,8 +14,9 @@ class InboxController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($conversationId = null)
     {
+        $user = Auth::user();
         $userId = Auth::user()->id;
     
         $conversations = Conversation::with([
@@ -29,8 +30,10 @@ class InboxController extends Controller
         ->where('owner_id', $userId)
         ->orWhere('buyer_id', $userId)
         ->get();
+
+        $activeConversation = $conversations->firstWhere('id', $conversationId);
     
-        return view('account.inbox', compact('conversations'));
+        return view('account.inbox', compact('conversations', 'activeConversation', 'user'));
     }
 
     /**
@@ -47,15 +50,17 @@ class InboxController extends Controller
     public function store(StoreInboxRequest $request): RedirectResponse
     {
         $user = Auth::user();
-        
+
         $validated = $request->validated();
-
         $validated['sender_id'] = Auth::id();
-        $validated['conversation_id'] = $request->input('conversation_id');
+        // $validated['conversation_id'] = $request->input('conversation_id');
         
-        $message = Message::create($validated);
+        Message::create($validated);
 
-        return redirect()->route('account.inbox', compact('user'));
+        return redirect()->route('account.inbox', [
+            'user' => $user->id,
+            'conversation' => $validated['conversation_id'],
+        ]);
     }
 
     /**

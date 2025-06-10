@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+        protected $fillable = [
+        'body',
+        'conversation_id',
+        'sender_id'
+    ];
+
     /** @use HasFactory<\Database\Factories\MessageFactory> */
     use HasFactory;
 
