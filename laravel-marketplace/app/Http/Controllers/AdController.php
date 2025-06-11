@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ad;
 use App\Models\Bid;
 use App\Models\Category;
+use App\Models\Conversation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,8 @@ class AdController extends Controller
                     }
                 });
             })
+            ->orderByDesc('promoted')
+            ->orderByDesc('promoted_at')
             ->paginate(10)
             ->through(function ($ad) {
                 $ad->category_ids_csv = $ad->categories->pluck('id')->join(',');
@@ -83,12 +86,22 @@ class AdController extends Controller
     public function show(Ad $ad)
     {
         $user = Auth::user();
+
         $bids = Bid::where('ad_id', $ad->id)
             ->with('user')
             ->orderBy('price', 'desc')
             ->get();
 
-        return view('marketplace.show', compact('ad', 'bids', 'user'));
+        $conversation = Conversation::where('ad_id', $ad->id)
+            ->where(function ($query) use ($user) {
+                $query->where('buyer_id', $user->id)
+                    ->orWhere('owner_id', $user->id);
+            })
+            ->first();
+
+        $conversationId = $conversation?->id;
+
+        return view('marketplace.show', compact('ad', 'bids', 'user', 'conversationId'));
     }
 
     /**

@@ -20,6 +20,11 @@ class AdPolicy
         return $user->id !== $ad->user_id;
     }
 
+    public function message(User $user, Ad $ad): bool
+    {
+        return $user->id !== $ad->user_id;
+    }
+
     public function edit(User $user, Ad $ad): bool
     {
         return $user->id === $ad->user_id;

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInboxRequest;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Models\User;
+use App\Notifications\NewInboxMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +16,7 @@ class InboxController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($conversationId = null)
+    public function index(?Conversation $conversation = null)
     {
         $user = Auth::user();
         $userId = Auth::user()->id;
@@ -31,7 +33,7 @@ class InboxController extends Controller
         ->orWhere('buyer_id', $userId)
         ->get();
 
-        $activeConversation = $conversations->firstWhere('id', $conversationId);
+        $activeConversation = $conversations->firstWhere('id', $conversation?->id);
     
         return view('account.inbox', compact('conversations', 'activeConversation', 'user'));
     }
@@ -53,9 +55,20 @@ class InboxController extends Controller
 
         $validated = $request->validated();
         $validated['sender_id'] = Auth::id();
-        // $validated['conversation_id'] = $request->input('conversation_id');
         
-        Message::create($validated);
+        $message = Message::create($validated);
+
+        $conversation = $message->conversation;
+
+        $recipientId = $conversation->buyer_id === $user->id
+            ? $conversation->owner_id
+            : $conversation->buyer_id;
+
+        $recipient = User::find($recipientId);
+
+        if ($recipient) {
+            $recipient->notify(new NewInboxMessage($message));
+        }
 
         return redirect()->route('account.inbox', [
             'user' => $user->id,

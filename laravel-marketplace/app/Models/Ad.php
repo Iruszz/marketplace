@@ -15,7 +15,8 @@ class Ad extends Model
         'user_id',
         'title', 
         'body',
-        'price'
+        'price',
+        'promoted'
     ];
 
     public function limitedTitle(): Attribute

@@ -2,21 +2,24 @@
 
 namespace App\Notifications;
 
+use App\Models\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewMessageNotification extends Notification
+class NewInboxMessage extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    public $message;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Message $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -35,8 +38,11 @@ class NewMessageNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
+            ->subject('You have a new message')
+            ->greeting('Hello ' . $notifiable->name . ',')
+            ->line('You have received a new message from ' . $this->message->sender->name . '.')
+            ->line('Message: "' . $this->message->body . '"')
+            ->action('View Message', route('account.inbox', ['conversation' => $this->message->conversation_id]))
             ->line('Thank you for using our application!');
     }
 

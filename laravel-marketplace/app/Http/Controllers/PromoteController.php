@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Http\Requests\StorePromoteRequest;
+use App\Models\Ad;
+use App\Models\Promote;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
-class MessageController extends Controller
+class PromoteController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
@@ -26,15 +32,23 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StorePromoteRequest $request)
+    {   
+        $ad = Ad::findOrFail($request->ad_id);
+        
+        $this->authorize('update', $ad);
+
+        $ad->promoted = true;
+        $ad->promoted_at = now();
+        $ad->save();
+
+        return redirect()->route('marketplace.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Message $message)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +56,7 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Message $message)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +64,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Message $message)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +72,7 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Message $message)
+    public function destroy(string $id)
     {
         //
     }

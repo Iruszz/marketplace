@@ -10,6 +10,7 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InboxController;
+use App\Http\Controllers\PromoteController;
 use App\Models\Category;
 
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
@@ -20,8 +21,9 @@ Route::get('ads/{ad}/edit', [AdController::class, 'edit'])->name('ads.edit');
 Route::patch('ads/{ad}', [AdController::class, 'update'])->name('ads.update');
 Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
 
-Route::get('user/{user}/index', [AccountController::class, 'index'])
-    ->name('account.index')
+Route::post('promote/store', [PromoteController::class, 'store'])->name('promote.store');
+
+Route::get('user/{user}/index', [AccountController::class, 'index'])->name('account.index')
     ->middleware('auth');
 Route::get('inbox/{conversation?}', [InboxController::class, 'index'])
     ->name('account.inbox')
@@ -29,10 +31,6 @@ Route::get('inbox/{conversation?}', [InboxController::class, 'index'])
 Route::post('inbox/store', [InboxController::class, 'store'])
     ->name('inbox.store')
     ->middleware('auth');
-
-// Route::get('user/{user}/index', [AccountController::class, 'index'])
-// ->name('account.index')
-// ->middleware('auth');
 
 Route::post('/ads/{ad}/bids', [BidController::class, 'store'])->name('bid.store');
 
