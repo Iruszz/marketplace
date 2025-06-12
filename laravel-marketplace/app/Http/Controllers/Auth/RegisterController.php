@@ -42,18 +42,19 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::create($attributes);
-        Auth::login($user);
+        $registerUser = User::create($attributes);
+        $userLogin = Auth::login($registerUser);
+        $user = Auth::user();
 
-        $mail = new UserRegistered($user);
+        $mail = new UserRegistered($registerUser);
 
         Log::info('Sending email to: ' . $request->user()->email);
         Log::info('Subject: ' . $mail->subject);
         Log::info('Mail content: ' . print_r($mail->render(), true));
 
-        Mail::to($request->user())->send(new UserRegistered($user));
+        Mail::to($request->user())->send(new UserRegistered($registerUser));
 
-        return redirect()->route('marketplace.index');
+        return redirect()->route('account.index', compact('user'));
     }
 
     /**

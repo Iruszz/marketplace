@@ -15,18 +15,22 @@
         <p class="text-gray-500 p-10 ">No messages yet</p>
         @else
           @foreach ($conversations as $conversation)
-              <ul class="">
+          <a href="{{ route('account.inbox', ['user' => auth()->id(), 'conversation' => $conversation->id]) }}" class="flex flex-col">
+              <ul>
                 <li class="py-5 px-7 border-b border-gray-300 hover:bg-blue-100 
                   {{ $conversation->id == optional($activeConversation)->id ? 'bg-blue-200' : ($loop->even ? 'bg-gray-100' : 'bg-white') }}">
-                  <a href="{{ route('account.inbox', ['user' => auth()->id(), 'conversation' => $conversation->id]) }}" class="flex flex-col">
-                    <h3 class="text-lg font-semibold">{{ $conversation->buyer->name }}</h3>
-                    <p class="text-md text-gray-400">{{ $conversation->ad->limitedTitle }}</p>
-                  </a>
-                  <div class="text-md italic text-gray-400">
-                    {{ $conversation->messages->first()->content }}
+                    <h3 class="text-lg font-semibold max-w-[90%] truncate">{{ $conversation->buyer->name }}</h3>
+                    <p class="text-md text-gray-400 max-w-[90%] truncate">{{ $conversation->ad->limitedTitle }}</p>
+                  <div class="text-md italic text-gray-400 max-w-[90%] truncate">
+                    @if ($conversation->messages->isNotEmpty())
+                        {{ $conversation->messages->last()->body }}
+                    @else
+                        <span class="text-gray-400 italic">No messages yet</span>
+                    @endif
                   </div>
                 </li>
               </ul>
+          </a>
           @endforeach
         @endif
     </section>

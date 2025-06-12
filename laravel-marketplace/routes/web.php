@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\InboxController;
 use App\Http\Controllers\PromoteController;
 use App\Models\Category;
@@ -36,6 +37,10 @@ Route::post('/ads/{ad}/bids', [BidController::class, 'store'])->name('bid.store'
 
 Route::post('categories/store', [CategoryController::class, 'store'])->name('categories.store');
 
+Route::post('conversation/store', [ConversationController::class, 'store'])
+    ->name('conversation.store')
+    ->middleware('auth');
+
 Route::get('register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('register', [RegisterController::class, 'store'])->name('register.store');
 
@@ -43,6 +48,12 @@ Route::get('login', [LoginController::class, 'index'])->name('login.index');
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
 
 Route::post('logout', [LoginController::class, 'destroy'])->name('logout.destroy');
+
+// Route::get('/force-logout', function () {
+//     \Illuminate\Support\Facades\Auth::logout();
+//     \Illuminate\Support\Facades\Session::flush(); // Optional: Clear all session data
+//     return redirect('/login');
+// });
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'index'])
     ->middleware('guest')

@@ -7,6 +7,7 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use App\Notifications\NewInboxMessage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -67,6 +68,7 @@ class InboxController extends Controller
         $recipient = User::find($recipientId);
 
         if ($recipient) {
+            Log::info('Sending notification to user id: '.$recipient->id);
             $recipient->notify(new NewInboxMessage($message));
         }
 

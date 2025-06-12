@@ -10,6 +10,12 @@ class Conversation extends Model
     /** @use HasFactory<\Database\Factories\ConversationFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'ad_id',
+        'owner_id',
+        'buyer_id',
+    ];
+
     public function ad()
     {
         return $this->belongsTo(Ad::class);

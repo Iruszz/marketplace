@@ -20,6 +20,8 @@ class AdController extends Controller
     public function index(Request $request)
     {
         $keywords = explode(' ', request('q'));
+
+        $selectedCategory = null;
         
         $ads = Ad::with('categories')
             ->when($request->filled('q'), function ($query) use ($keywords) {
@@ -40,7 +42,7 @@ class AdController extends Controller
         $user = Auth::user();
         $categories = Category::all();
 
-        return view('marketplace.index', compact('ads', 'user', 'categories'),);
+        return view('marketplace.index', compact('ads', 'user', 'categories', 'selectedCategory'));
     }
 
     /**
