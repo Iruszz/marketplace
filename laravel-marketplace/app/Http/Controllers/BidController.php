@@ -32,12 +32,13 @@ class BidController extends Controller
      */
     public function store(StoreBidRequest $request): RedirectResponse
     {
+        //      Ongebruikte variabele, kan weg
         $user = Auth::user();
 
         $validated = $request->validated();
 
         $validated['user_id'] = Auth::id();
-        $validated['ad_id'] = $request->input('ad_id');
+        $validated['ad_id'] = $request->input('ad_id');     //      Deze zou al in de request moeten zitten?
         
         Bid::create($validated);
 

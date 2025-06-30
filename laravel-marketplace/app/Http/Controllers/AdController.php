@@ -25,6 +25,7 @@ class AdController extends Controller
         
         $ads = Ad::with('categories')
             ->when($request->filled('q'), function ($query) use ($keywords) {
+                //      Deze tweede function heb je niet nodig, je foreach kan direct in de eerste function?
                 $query->where(function ($q) use ($keywords) {
                     foreach ($keywords as $word) {
                         $q->where('title', 'like', "%{$word}%");
@@ -94,6 +95,7 @@ class AdController extends Controller
             ->orderBy('price', 'desc')
             ->get();
 
+        //      Dit kan je simpeler/korter doen met whereAny
         $conversation = Conversation::where('ad_id', $ad->id)
             ->where(function ($query) use ($user) {
                 $query->where('buyer_id', $user->id)

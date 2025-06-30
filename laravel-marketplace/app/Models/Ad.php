@@ -22,6 +22,7 @@ class Ad extends Model
     public function limitedTitle(): Attribute
     {
         return Attribute::make(
+            //      Makkelijker is om dit te doen met Str::limit($this->title, 65);
             get: fn (): string => strlen($this->title) > 65 ? substr($this->title, 0, 65) . '...' : $this->title,
         );
     }

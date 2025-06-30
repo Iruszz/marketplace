@@ -10,6 +10,10 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
+
+    //      Je gebruikt hier de standaard resourcefuncties, maar die naamgeving is niet logisch voor de login/out functionaliteit.
+    //      Noem je functies bijv. show, login & logout zodat duidelijker is welke functie wat doet.
+
     /**
      * Display a listing of the resource.
      */

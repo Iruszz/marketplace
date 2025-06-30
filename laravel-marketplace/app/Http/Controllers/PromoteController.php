@@ -32,8 +32,11 @@ class PromoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //      Dit is eigenlijk een update van de advertentie. Dus geen store maar een update functie.
     public function store(StorePromoteRequest $request)
     {   
+        //      Gebruik routemodelbinding via de route.
         $ad = Ad::findOrFail($request->ad_id);
         
         $this->authorize('update', $ad);

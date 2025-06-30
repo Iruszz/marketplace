@@ -20,7 +20,7 @@ class InboxController extends Controller
     public function index(?Conversation $conversation = null)
     {
         $user = Auth::user();
-        $userId = Auth::user()->id;
+        $userId = Auth::user()->id; //      Dit is een beetje dubbel, gebruik ipv $userId gewoon $user->id
     
         $conversations = Conversation::with([
             'owner', 

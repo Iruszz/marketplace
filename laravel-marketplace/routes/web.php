@@ -14,16 +14,23 @@ use App\Http\Controllers\InboxController;
 use App\Http\Controllers\PromoteController;
 use App\Models\Category;
 
+
+//      Tip: Je maakt bijv. al je ads routes in 1 keer met Route::resource('ads', AdController::class); Alleen daarnaast je '/' route nog instellen.
+
 Route::get('/', [AdController::class, 'index'])->name('marketplace.index');
 Route::get('ads/create', [AdController::class, 'create'])->name('ads.create');
 Route::post('ads/store', [AdController::class, 'store'])->name('ads.store');
 Route::get('ads/{ad}', [AdController::class, 'show'])->name('ads.show');
 Route::get('ads/{ad}/edit', [AdController::class, 'edit'])->name('ads.edit');
+//      Gebruik patch als je maar een paar eigenschappen update, put als je het hele item update.
 Route::patch('ads/{ad}', [AdController::class, 'update'])->name('ads.update');
 Route::delete('ads/{ad}', [AdController::class, 'destroy'])->name('ads.destroy');
 
+//      Promote is een eigenschap van de Ad. Logischer als route is dus 'ads/{ad}/promote'.
+//      Je hebt de Ad dan ook meteen beschikbaar via routemodelbinding. Voor deze route zou je Route::patch kunnen gebruiken.
 Route::post('promote/store', [PromoteController::class, 'store'])->name('promote.store');
 
+//      De /index voegt niets toe, mooiere/compactere url als je dat weglaat. Zelfde voor /store verderop.
 Route::get('user/{user}/index', [AccountController::class, 'index'])->name('account.index')
     ->middleware('auth');
 Route::get('inbox/{conversation?}', [InboxController::class, 'index'])

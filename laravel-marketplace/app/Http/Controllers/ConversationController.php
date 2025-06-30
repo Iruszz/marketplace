@@ -23,6 +23,7 @@ class ConversationController extends Controller
         $buyerId = $user->id;
         $ownerId = $ad->user_id; // assuming 'user_id' is owner of ad
 
+        //      ipv '->where(function...' kan dit een stuk simpeler met whereAny
         $conversation = Conversation::where('ad_id', $ad->id)
             ->where(function ($query) use ($buyerId, $ownerId) {
                 $query->where(function ($q) use ($buyerId, $ownerId) {
