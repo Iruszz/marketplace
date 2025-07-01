@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRegisterRequest;
 use App\Listeners\SendWelcomeEmail;
 use App\Mail\UserRegistered;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
@@ -27,32 +29,22 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
         return view('auth.register', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRegisterRequest $request): RedirectResponse
     {
-        $attributes = request()->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+        $validated = $request->validated();
 
-        $registerUser = User::create($attributes);
-        $userLogin = Auth::login($registerUser);
+        $registerUser = User::create($validated);
+        Auth::login($registerUser);
+
         $user = Auth::user();
 
-        $mail = new UserRegistered($registerUser);
-
-        Log::info('Sending email to: ' . $request->user()->email);
-        Log::info('Subject: ' . $mail->subject);
-        Log::info('Mail content: ' . print_r($mail->render(), true));
-
-        Mail::to($request->user())->send(new UserRegistered($registerUser));
+        Mail::to($user)->send(new UserRegistered($user));
 
         return redirect()->route('account.index', compact('user'));
     }

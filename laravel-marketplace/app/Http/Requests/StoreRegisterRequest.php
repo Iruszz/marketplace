@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePromoteRequest extends FormRequest
+class StoreRegisterRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,9 @@ class StorePromoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ad_id' => ['required', 'exists:ads,id'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
         ];
     }
 }

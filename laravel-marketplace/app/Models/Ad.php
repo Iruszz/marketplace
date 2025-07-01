@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Ad extends Model
@@ -22,7 +22,7 @@ class Ad extends Model
     public function limitedTitle(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => strlen($this->title) > 65 ? substr($this->title, 0, 65) . '...' : $this->title,
+            get: fn (): string => Str::limit($this->title, 65, '...'),
         );
     }
 

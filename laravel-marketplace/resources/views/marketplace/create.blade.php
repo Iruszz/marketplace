@@ -72,33 +72,6 @@
                         @enderror
                     </div>
                 </div>
-
-                {{-- <div class="col-span-full">
-                    <div class="grid grid-cols-1 sm:grid-cols-6">
-                        <div class="sm:col-span-1">
-                            <label for="categoryId" class="block text-sm/6 font-medium text-gray-900">Category</label>
-                            <div class="mt-2 grid grid-cols-1">
-                            <select id="categoryId" type="text" name="category_id"
-                                class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300">
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="col-span-full">
-                    <div class="grid grid-cols-1 sm:grid-cols-6">
-                        <div class="sm:col-span-1">
-                            <input id="is_premium" type="checkbox" name="is_premium" value="1" class="w-4 h-4 text-purple-600 bg-gray-100 border border-gray-300 rounded-sm">
-                            <label for="is_premium" class="ms-2 text-sm font-medium text-gray-900">Premium ad</label>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
 
 

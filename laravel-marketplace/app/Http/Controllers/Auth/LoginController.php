@@ -13,7 +13,7 @@ class LoginController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function showLoginForm()
     {
         $user = Auth::user();
         return view('auth.login');
@@ -30,7 +30,7 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function login(Request $request, User $user)
     {
         $attributes = $request->validate([
             'email' => ['required', 'email'],
@@ -80,7 +80,7 @@ class LoginController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
 

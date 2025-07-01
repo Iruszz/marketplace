@@ -30,18 +30,16 @@ class BidController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBidRequest $request): RedirectResponse
+    public function store(StoreBidRequest $request, Ad $ad): RedirectResponse
     {
-        $user = Auth::user();
-
         $validated = $request->validated();
 
         $validated['user_id'] = Auth::id();
-        $validated['ad_id'] = $request->input('ad_id');
+        $validated['ad_id'] = $ad->id;
         
         Bid::create($validated);
 
-        return redirect()->route('ads.show', ['ad' => $validated['ad_id']]);
+        return redirect()->route('ads.show', $ad);
     }
 
     /**

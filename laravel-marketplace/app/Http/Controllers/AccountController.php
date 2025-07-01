@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -18,11 +18,9 @@ class AccountController extends Controller
         $ads = $user->ads()
             ->with('categories')
             ->when($request->filled('q'), function ($query) use ($keywords) {
-                $query->where(function ($q) use ($keywords) {
-                    foreach ($keywords as $word) {
-                        $q->where('title', 'like', "%{$word}%");
-                    }
-                });
+                foreach ($keywords as $word) {
+                    $query->where('title', 'like', "%{$word}%");
+                }
             })
             ->paginate(10)
             ->through(function ($ad) {

@@ -22,6 +22,7 @@ class StoreBidRequest extends FormRequest
 
         return [
             'price' => ['required', 'numeric', 'min:' . $minPrice],
+            'ad_id' => ['required']
         ];
     }
 }

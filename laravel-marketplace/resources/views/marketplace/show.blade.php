@@ -61,8 +61,6 @@
                   class=""
                   method="POST" enctype="multipart/form-data">
                   @csrf
-                  <input type="hidden" name="ad_id" value="{{ $ad->id }}">
-                  
                     <p class="text-base font-medium text-gray-900">Your bid</p>
                     <div class="flex flex-col gap-8">
                         <div class="mt-4 grid gap-x-6 gap-y-8">

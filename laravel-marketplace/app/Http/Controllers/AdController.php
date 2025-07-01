@@ -25,11 +25,9 @@ class AdController extends Controller
         
         $ads = Ad::with('categories')
             ->when($request->filled('q'), function ($query) use ($keywords) {
-                $query->where(function ($q) use ($keywords) {
-                    foreach ($keywords as $word) {
-                        $q->where('title', 'like', "%{$word}%");
-                    }
-                });
+                foreach ($keywords as $word) {
+                    $query->where('title', 'like', "%{$word}%");
+                }
             })
             ->orderByDesc('promoted')
             ->orderByDesc('promoted_at')
@@ -95,11 +93,11 @@ class AdController extends Controller
             ->get();
 
         $conversation = Conversation::where('ad_id', $ad->id)
-            ->where(function ($query) use ($user) {
-                $query->where('buyer_id', $user->id)
-                    ->orWhere('owner_id', $user->id);
-            })
-            ->first();
+        ->whereAny([
+            ['buyer_id', $user->id],
+            ['owner_id', $user->id],
+        ])
+        ->first();
 
         $conversationId = $conversation?->id;
 

@@ -13,7 +13,6 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        // Validate input
         $data = $request->validate([
             'ad_id' => ['required', 'exists:ads,id'],
         ]);
@@ -21,16 +20,25 @@ class ConversationController extends Controller
         $ad = Ad::findOrFail($data['ad_id']);
 
         $buyerId = $user->id;
-        $ownerId = $ad->user_id; // assuming 'user_id' is owner of ad
+        $ownerId = $ad->user_id;
+
+        // $conversation = Conversation::where('ad_id', $ad->id)
+        //     ->where(function ($query) use ($buyerId, $ownerId) {
+        //         $query->where(function ($q) use ($buyerId, $ownerId) {
+        //             $q->where('buyer_id', $buyerId)
+        //             ->where('owner_id', $ownerId);
+        //         })->orWhere(function ($q) use ($buyerId, $ownerId) {
+        //             $q->where('buyer_id', $ownerId)
+        //             ->where('owner_id', $buyerId);
+        //         });
+        //     })
+        //     ->first();
 
         $conversation = Conversation::where('ad_id', $ad->id)
             ->where(function ($query) use ($buyerId, $ownerId) {
                 $query->where(function ($q) use ($buyerId, $ownerId) {
                     $q->where('buyer_id', $buyerId)
                     ->where('owner_id', $ownerId);
-                })->orWhere(function ($q) use ($buyerId, $ownerId) {
-                    $q->where('buyer_id', $ownerId)
-                    ->where('owner_id', $buyerId);
                 });
             })
             ->first();
